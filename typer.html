@@ -19,7 +19,7 @@
             <button class="btn btn-primary btn-lg" ng-click="startTest()">Start Test</button>
             <div class="mb-3"></div>
             <p>Select the number of sentences.</p>
-            <select id="fruit" ng-model="selectedNumber" ng-options="i for i in numberRange">
+            <select id="fruit" ng-model="selectedNumber" ng-options="i for i in numberRange" ng-change="getRandomSentences()">
             </select>
         </div>
         <div ng-show="showTest" id="box">

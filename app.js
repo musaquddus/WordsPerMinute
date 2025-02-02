@@ -9,9 +9,11 @@ app.controller('TypingController', function($scope, $interval) {
         "This is a short sentence."
     ];
     $scope.numberRange = Array.from({ length: $scope.sentences.length }, (v, k) => k + 1);
-    $scope.selectedNumber = 1;
+    $scope.selectedNumber = 1;  // Set default value
 
-    function getRandomSentences(count) {
+    $scope.getRandomSentences = function() {
+        let count = $scope.selectedNumber;
+        console.log(`Generating ${count} sentences`);
         let tempSentences = [...$scope.sentences];
         let selectedSentences = [];
         
@@ -20,14 +22,16 @@ app.controller('TypingController', function($scope, $interval) {
             selectedSentences.push(tempSentences[randomIndex]);
             tempSentences.splice(randomIndex, 1);
         }
+        $scope.sentence = selectedSentences.join(' ').split('');
         
-        return selectedSentences.join(' ').split('');
     }
 
     $scope.resetTest = function() {
         if (timer) {
             $interval.cancel(timer);
         }
+        $scope.selectedNumber = 1;  // Reset to default
+        $scope.getRandomSentences();  // Generate new sentences
         $scope.userInput = "";
         $scope.startTime = null;
         $scope.completed = false;
@@ -42,7 +46,6 @@ app.controller('TypingController', function($scope, $interval) {
     var timer;
 
     $scope.startTest = function() {
-        $scope.sentence = getRandomSentences($scope.selectedNumber);
         $scope.showTest = true;
         $scope.selectedNumber = 1;
     };
